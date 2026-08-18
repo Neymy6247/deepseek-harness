@@ -164,11 +164,14 @@ export function ConversationSession({
 
   if (blank && composerPhase === 'blank') return null
   return (
-    <div className={css.viewArea}>
-      {active !== undefined && renderSlot('conversation.view', {
-        inspect,
-        onInspectDone: () => { actions.setInspect(null) },
-      }, { only: active.id })}
+    <div className={css.sessionBody}>
+      <div className={css.viewArea}>
+        {active !== undefined && renderSlot('conversation.view', {
+          inspect,
+          onInspectDone: () => { actions.setInspect(null) },
+        }, { only: active.id })}
+      </div>
+      {active !== undefined && renderSlot('conversation.session.navigator', { activeViewId: active.id })}
     </div>
   )
 }

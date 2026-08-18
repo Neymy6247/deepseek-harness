@@ -48,6 +48,15 @@ it('boots the built plugin graph and renders a fixture session end to end', asyn
   // boot graph intentionally does not mount the separate question UI plugin.
   fireEvent.click(await screen.findByRole('button', { name: 'Allow once' }))
 
+  // The optional navigator joins the real built plugin graph and derives user
+  // rows from the open fixture conversation without another host projection.
+  const navigator = await waitFor(() => {
+    const element = document.querySelector<HTMLElement>('nav[aria-label="已发送消息导航"]')
+    expect(element).not.toBeNull()
+    return element!
+  }, { timeout: 10_000 })
+  expect(navigator.querySelectorAll('button').length).toBeGreaterThan(0)
+
   // The fixture mirrors all three token-meter projections, so the assembled
   // ContextMeter reaches its composition panel instead of only the occupancy
   // fallback path.

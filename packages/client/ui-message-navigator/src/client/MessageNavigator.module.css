@@ -1,0 +1,117 @@
+.root {
+  --message-navigator-anchor-width: 36px;
+  --message-navigator-bubble-width: 210px;
+
+  position: sticky;
+  top: 50%;
+  z-index: 5;
+  display: flex;
+  box-sizing: border-box;
+  width: calc(
+    var(--message-navigator-bubble-width)
+    + var(--message-navigator-anchor-width)
+    + 16px
+  );
+  max-height: calc(100vh - 160px);
+  flex: none;
+  flex-direction: column;
+  align-self: flex-start;
+  gap: 2px;
+  margin-left: calc(0px - var(--message-navigator-bubble-width) - 16px);
+  overflow-y: auto;
+  padding: 2px 8px 2px 0;
+  transform: translateY(-50%);
+  scrollbar-width: none;
+}
+
+.root::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  width: var(--message-navigator-anchor-width);
+  min-width: 0;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--dsw-alias-label-secondary);
+  font: var(--dsw-font-xs-13);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.item:hover,
+.item:focus-visible {
+  background: var(--dsw-alias-interactive-bg-hover);
+  color: var(--dsw-alias-label-primary);
+  outline: none;
+}
+
+.item:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--dsw-alias-state-business-primary);
+}
+
+.item[data-active='true']::before {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--dsw-alias-state-business-primary);
+  content: '';
+}
+
+.marker {
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentcolor;
+}
+
+.preview {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 8px);
+  box-sizing: border-box;
+  display: -webkit-box;
+  width: var(--message-navigator-bubble-width);
+  overflow: hidden;
+  padding: 6px 8px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  background: var(--dsw-alias-bg-layer-2);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+  line-height: 22px;
+  text-align: left;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  transform: translateY(-50%);
+}
+
+.item[data-preview-edge='start'] .preview {
+  top: 0;
+  transform: none;
+}
+
+.item[data-preview-edge='end'] .preview {
+  top: auto;
+  bottom: 0;
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .root {
+    display: none;
+  }
+}

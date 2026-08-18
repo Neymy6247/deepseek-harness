@@ -177,10 +177,17 @@
   background: var(--dsw-alias-state-business-primary);
 }
 
+.sessionBody {
+  display: flex;
+  flex: 1 0 auto;
+  min-width: 0;
+}
+
 .viewArea {
   display: flex;
   flex: 1;
   flex-direction: column;
+  min-width: 0;
   min-height: 0;
 }
 

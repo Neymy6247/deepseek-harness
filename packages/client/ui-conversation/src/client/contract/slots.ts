@@ -43,6 +43,16 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
      */
     'conversation.session': { kind: 'single'; scope: 'session' }
     /**
+     * Optional right-side navigation for the active conversation view. The
+     * strict session body owns its placement beside the view and passes the
+     * active view id so a contributor can stay absent outside its supported view.
+     */
+    'conversation.session.navigator': {
+      kind: 'single'
+      scope: 'session'
+      owner: ConversationNavigatorOwnerProps
+    }
+    /**
      * The strip above the session's scrollport: title, view tabs, and the
      * action row. Taking this seat means rendering all three yourself, and it
      * also collapses `conversation.session.header.actions` — that additive
@@ -262,6 +272,12 @@ export interface ConversationSessionOwnerProps {
   wrapActiveBody?: (view: ReactNode) => ReactNode
 }
 
+/** Right-side navigation receives the view currently rendered by the session body. */
+export interface ConversationNavigatorOwnerProps {
+  /** Active `conversation.view` entry id, always resolved to a registered view. */
+  readonly activeViewId: string
+}
+
 /** Header actions derive their state from the standard session/global kit. */
 export interface ConversationHeaderActionOwnerProps {}
 
@@ -405,6 +421,9 @@ export type CommandRowProps = PropsRuntime<'conversation.chat.commandview'>
  * readers (ui-trajectory) take this base alone.
  */
 export type ConvViewProps = PropsRuntime<'conversation.view'>
+
+/** Full props of the optional session navigation entry. */
+export type ConversationNavigatorSlotProps = PropsRuntime<'conversation.session.navigator'>
 
 /** The shared chat store handle type declared by the Session header/body, details, and chat-view registrations. */
 export type ChatStore = ReturnType<typeof createChatStore>
@@ -582,7 +601,7 @@ export type ConversationSlotProps =
 /** Full strict-session body props: per-session store, view ring, and draft mirror. */
 export type ConversationSessionSlotProps =
   PropsRuntime<'conversation.session'>
-  & PropsRenderSlots<'conversation.view'>
+  & PropsRenderSlots<'conversation.view' | 'conversation.session.navigator'>
   & PropsStore<ChatStore>
   & ConversationSessionInjected
 
